@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/karoterra/aviutl2-aulua/refs/heads/main/schema/aulua.schema.json
+project:
+  variables:
+    NAME: ベクターキャンバス
+    VERSION: v0.1.0
+    AUTHOR: もげ
+
+build:
+  out_dir: build
+
+install:
+  out_dir: C:\ProgramData\aviutl2\Script\VectorCanvas\
+
+scripts:
+  - name: "@VectorCanvas.anm2"
+    sources:
+      - label: キャンバス
+        path: script/キャンバス.anm2
+      - label: パス(直線)
+        path: script/パス(直線).anm2
+      - label: パス(2点)
+        path: script/パス(2点).anm2
+      - label: パス(折線)
+        path: script/パス(折線).anm2
+      - label: パス(テキスト)
+        path: script/パス(テキスト).anm2
+      - label: パス(四角)
+        path: script/パス(四角).anm2
+      - label: パス(多角形)
+        path: script/パス(多角形).anm2
+      - label: パス(円)
+        path: script/パス(円).anm2
+      - label: パス(グリッド)
+        path: script/パス(グリッド).anm2
+      - label: パス(コマンド)
+        path: script/パス(コマンド).anm2
+      - label: キャンバス効果(トランスフォーム)
+        path: script/キャンバス効果(トランスフォーム).anm2
+      - label: パス効果(トランスフォーム)
+        path: script/パス効果(トランスフォーム).anm2
+      - label: パス効果(ストロークをパスに)
+        path: script/パス効果(ストロークをパスに).anm2
+      - label: パス効果(丸め)
+        path: script/パス効果(丸め).anm2
+      - label: パス効果(簡略化)
+        path: script/パス効果(簡略化).anm2
+      - label: パス効果(ブーリアン)
+        path: script/パス効果(ブーリアン).anm2
+      - label: パス効果(ノイズ)
+        path: script/パス効果(ノイズ).anm2
+      - label: パス複製(配列)
+        path: script/パス複製(配列).anm2
+      - label: パス複製(グリッド)
+        path: script/パス複製(グリッド).anm2
+      - label: パス複製(ランダム)
+        path: script/パス複製(ランダム).anm2
+      - label: ストローク
+        path: script/ストローク.anm2
+      - label: フィル
+        path: script/フィル.anm2
+      - label: レンダー
+        path: script/レンダー.anm2

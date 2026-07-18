@@ -1,0 +1,90 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$track:X
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local x = 0
+
+---$track:Y
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local y = 0
+
+---$track:サイズ
+---min=0
+---max=1000
+---step=0.1
+local size = 64
+
+---$track:字間
+---min=-1000
+---max=1000
+---step=0.1
+local letter_spacing = 0
+
+---$track:行間
+---min=-1000
+---max=1000
+---step=0.1
+local line_spacing = 0
+
+---$value:フォント
+local font = "Yu Gothic"
+
+---$check:太字
+local bold = false
+
+---$check:斜体
+local italic = false
+
+---$check:文字ごとに個別パス
+local separate_paths = false
+
+---$select:揃え位置
+---左寄せ[上]=0
+---中央揃え[上]=1
+---右寄せ[上]=2
+---左寄せ[中]=3
+---中央揃え[中]=4
+---右寄せ[中]=5
+---左寄せ[下]=6
+---中央揃え[下]=7
+---右寄せ[下]=8
+local align = 0
+
+---$text:テキスト
+local text = "Text"
+
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+local function escape_text(value)
+    value = tostring(value or "")
+    value = value:gsub("\\", "\\\\")
+    value = value:gsub("\t", "\\t")
+    value = value:gsub("\n", "\\n")
+    return value
+end
+
+local d = string.format(
+    "text_path: %f\t%f\t%f\t%f\t%f\t%s\t%d\t%d\t%d\t%d\t%s",
+    x,
+    y,
+    size,
+    letter_spacing,
+    line_spacing,
+    escape_text(font),
+    bold and 1 or 0,
+    italic and 1 or 0,
+    separate_paths and 1 or 0,
+    align,
+    escape_text(text)
+)
+table.insert(_vectorcanvas.canvas, d)

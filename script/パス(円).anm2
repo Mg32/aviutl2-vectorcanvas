@@ -1,0 +1,110 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$track:X
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local x = 0
+
+---$track:Y
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local y = 0
+
+---$track:幅
+---min=0
+---max=100000
+---step=0.01
+---scale=0.01
+local width = 200
+
+---$track:高さ
+---min=0
+---max=100000
+---step=0.01
+---scale=0.01
+local height = 200
+
+---$track:Xピボット
+---min=0
+---max=1
+---step=0.01
+local pivot_x = 0.5
+
+---$track:Yピボット
+---min=0
+---max=1
+---step=0.01
+local pivot_y = 0.5
+
+---$track:開始角
+---min=-3600
+---max=3600
+---step=0.01
+---scale=0.01
+local start_angle = 0
+
+---$track:終了角
+---min=-3600
+---max=3600
+---step=0.01
+---scale=0.01
+local stop_angle = 360
+
+---$check:中心に閉じる
+local close_to_center = false
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+if width <= 0 or height <= 0 then
+    return
+end
+
+local rx = width * 0.5
+local ry = height * 0.5
+local cx = x + width * (0.5 - pivot_x)
+local cy = y + height * (0.5 - pivot_y)
+local sweep = stop_angle - start_angle
+if math.abs(sweep) < 0.001 then
+    return
+end
+
+local function ellipse_point(degrees)
+    local radians = math.rad(degrees)
+    return cx + math.cos(radians) * rx, cy + math.sin(radians) * ry
+end
+
+local d
+if math.abs(sweep) >= 360 then
+    local sx, sy = ellipse_point(0)
+    local mx, my = ellipse_point(180)
+    d = string.format(
+        "path: M %f %f A %f %f 0 1 1 %f %f A %f %f 0 1 1 %f %f Z",
+        sx, sy,
+        rx, ry, mx, my,
+        rx, ry, sx, sy
+    )
+else
+    local sx, sy = ellipse_point(start_angle)
+    local ex, ey = ellipse_point(stop_angle)
+    local large_arc = math.abs(sweep) > 180 and 1 or 0
+    local sweep_flag = sweep >= 0 and 1 or 0
+    d = string.format(
+        "path: M %f %f A %f %f 0 %d %d %f %f",
+        sx, sy,
+        rx, ry,
+        large_arc, sweep_flag,
+        ex, ey
+    )
+    if close_to_center then
+        d = d .. string.format(" L %f %f Z", cx, cy)
+    end
+end
+
+table.insert(_vectorcanvas.canvas, d)

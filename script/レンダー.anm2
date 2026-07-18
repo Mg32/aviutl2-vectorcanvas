@@ -1,0 +1,16 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+local w = _vectorcanvas.width
+local h = _vectorcanvas.height
+local canvas = table.concat(_vectorcanvas.canvas, "\n")
+
+local backend = obj.module("vectorcanvas")
+local data, owner = backend.render(w, h, canvas)
+obj.putpixeldata("object", data, w, h)
+
+_vectorcanvas = nil

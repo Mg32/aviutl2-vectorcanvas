@@ -1,0 +1,62 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$track:X
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local dx = 0
+
+---$track:Y
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local dy = 0
+
+---$track:拡大率
+---min=0
+---max=5000
+---step=0.01
+---scale=1
+local scale = 100
+
+---$track:回転角
+---min=-3600
+---max=3600
+---step=0.01
+---scale=0.01
+local rotation = 0
+
+---$track:中心X
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local pivot_x = 0
+
+---$track:中心Y
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local pivot_y = 0
+
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+table.insert(
+    _vectorcanvas.canvas,
+    string.format(
+        "transform: translate(%f, %f) rotate(%f, %f, %f) scale(%f)",
+        dx,
+        dy,
+        rotation,
+        pivot_x,
+        pivot_y,
+        scale / 100.0
+    )
+)

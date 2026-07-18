@@ -1,0 +1,64 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$track:複製数
+---min=1
+---max=500
+---step=1
+local count = 2
+
+---$track:X間隔
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local dx = 100
+
+---$track:Y間隔
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local dy = 0
+
+---$track:回転間隔
+---min=-3600
+---max=3600
+---step=0.01
+---scale=0.01
+local rotation = 0
+
+---$track:回転軸X
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local pivot_x = 0
+
+---$track:回転軸Y
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local pivot_y = 0
+
+---$check:複製ごとに個別パス
+local separate_copies = true
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+table.insert(
+    _vectorcanvas.canvas,
+    string.format(
+        "path_duplicate_array: %d %f %f %f %f %f %d",
+        count,
+        dx,
+        dy,
+        rotation,
+        pivot_x,
+        pivot_y,
+        separate_copies and 1 or 0
+    )
+)

@@ -1,0 +1,14 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$track:半径
+---min=0
+---max=400
+---step=0.1
+local radius = 20
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+table.insert(_vectorcanvas.canvas, string.format("round: %f", radius))

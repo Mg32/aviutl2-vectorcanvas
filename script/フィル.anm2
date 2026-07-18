@@ -1,0 +1,17 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+--color@fill_color:色,0xffffff
+
+---$track:透明度
+---min=0
+---max=100
+---step=0.1
+---scale=1
+local opacity = 100
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+table.insert(_vectorcanvas.canvas, string.format("fill: #%06X %f", fill_color, opacity / 100.0))

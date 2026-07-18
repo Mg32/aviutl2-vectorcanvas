@@ -1,0 +1,91 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$track:X
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local x = 0
+
+---$track:Y
+---min=-100000
+---max=100000
+---step=0.01
+---scale=0.01
+local y = 0
+
+---$track:幅
+---min=0
+---max=100000
+---step=0.01
+---scale=0.01
+local width = 400
+
+---$track:高さ
+---min=0
+---max=100000
+---step=0.01
+---scale=0.01
+local height = 400
+
+---$track:Xピボット
+---min=0
+---max=1
+---step=0.01
+local pivot_x = 0.5
+
+---$track:Yピボット
+---min=0
+---max=1
+---step=0.01
+local pivot_y = 0.5
+
+---$track:X分割数
+---min=1
+---max=100
+---step=1
+local x_divisions = 6
+
+---$track:Y分割数
+---min=1
+---max=100
+---step=1
+local y_divisions = 6
+
+---$check:端の線を消す
+local hide_edges = true
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+if width <= 0 or height <= 0 then
+    return
+end
+
+local left = x - width * pivot_x
+local top = y - height * pivot_y
+local right = left + width
+local bottom = top + height
+local x_count = math.max(1, math.floor(x_divisions + 0.5))
+local y_count = math.max(1, math.floor(y_divisions + 0.5))
+local d = "path:"
+
+local x_beg = hide_edges and 1 or 0
+local x_end = hide_edges and (x_count - 1) or x_count
+for i = x_beg, x_end do
+    local px = left + width * i / x_count
+    d = d .. string.format(" M %f %f L %f %f", px, top, px, bottom)
+end
+
+local y_beg = hide_edges and 1 or 0
+local y_end = hide_edges and (y_count - 1) or y_count
+for i = y_beg, y_end do
+    local py = top + height * i / y_count
+    d = d .. string.format(" M %f %f L %f %f", left, py, right, py)
+end
+
+if d ~= "path:" then
+    table.insert(_vectorcanvas.canvas, d)
+end

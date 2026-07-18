@@ -1,0 +1,103 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$color:色
+local stroke_color = 0xffffff
+
+---$track:透明度
+---min=0
+---max=100
+---step=0.1
+---scale=1
+local opacity = 100
+
+---$track:太さ
+---min=0
+---max=400
+---step=0.1
+local linewidth = 5
+
+--group:破線
+
+---$check:破線にする
+local dashed = false
+
+---$value:破線パターン
+local dashed_intervals = {10, 10}
+
+---$track:破線のずれ
+---min=-1000
+---max=1000
+---step=0.1
+local dashed_phase = 0
+
+--group:形状制御
+
+---$select:端の形状
+---切断=0
+---四角=1
+---丸める=2
+local linecap = 0
+
+---$select:角の形状
+---尖らせる=0
+---丸める=1
+---ベベル=2
+local linejoin = 0
+
+---$value:角比率
+local miterlimit = 4
+
+--group:トリム
+
+---$track:開始位置
+---min=0
+---max=100
+---step=0.01
+---scale=1
+local trim_beg = 0
+
+---$track:終了位置
+---min=0
+---max=100
+---step=0.01
+---scale=1
+local trim_end = 100
+
+---$track:オーバーラップ
+---min=0
+---max=100
+---step=0.01
+---scale=1
+local trim_overlap = 100
+
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+local intervals = "{}"
+if dashed then
+    intervals = "{"
+    for i = 1, #dashed_intervals do
+        intervals = intervals .. " " .. dashed_intervals[i]
+    end
+    intervals = intervals .. " }"
+end
+
+local d = string.format(
+    "stroke: #%06X %f %d %s %f %d %d %f %f %f %f %f",
+    stroke_color,
+    linewidth,
+    dashed and 1 or 0,
+    intervals,
+    dashed_phase,
+    linecap,
+    linejoin,
+    miterlimit,
+    trim_beg / 100.0,
+    trim_end / 100.0,
+    trim_overlap / 100.0,
+    opacity / 100.0
+)
+table.insert(_vectorcanvas.canvas, d)

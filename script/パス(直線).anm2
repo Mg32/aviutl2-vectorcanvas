@@ -1,0 +1,17 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$value:座標
+local pos = {-200,-200,200,200}
+
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+obj.setanchor("pos", 2, "line")
+local x1 = pos[1]
+local y1 = pos[2]
+local x2 = pos[3]
+local y2 = pos[4]
+table.insert(_vectorcanvas.canvas, string.format("path: M %f %f L %f %f", x1, y1, x2, y2))

@@ -1,0 +1,11 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+if _vectorcanvas == nil then
+    _vectorcanvas = {
+        width = obj.w,
+        height = obj.h,
+        canvas = {},
+    }
+end
+
+global._vectorcanvas = _vectorcanvas

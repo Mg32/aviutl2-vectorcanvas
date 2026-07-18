@@ -1,0 +1,8 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+table.insert(_vectorcanvas.canvas, "simplify")

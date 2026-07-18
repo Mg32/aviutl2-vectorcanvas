@@ -1,0 +1,40 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$track:点数
+---min=2
+---max=50
+---step=1
+local n = 2
+
+---$check:閉じる
+local close = false
+
+---$value:座標
+local pos = {-200,-200,-200,200,200,200,200,-200}
+
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+-- show anchor
+local mode = close and "loop" or "line"
+obj.setanchor("pos", n, mode)
+
+-- validation
+if #pos < n*2 then
+    for i = #pos+1, n*2 do
+        pos[i] = 0
+    end
+end
+
+-- create path data
+local d = "path: M"
+for i = 1, n*2 do
+    d = d .. " " .. pos[i]
+end
+if close then
+    d = d .. "Z"
+end
+table.insert(_vectorcanvas.canvas, d)

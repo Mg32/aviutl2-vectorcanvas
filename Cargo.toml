@@ -1,0 +1,11 @@
+[package]
+name = "vectorcanvas"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+aviutl2 = "0.39.0"
+skia-safe = "0.99.0"

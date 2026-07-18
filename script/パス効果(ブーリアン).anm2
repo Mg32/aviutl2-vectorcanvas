@@ -1,0 +1,15 @@
+--information:VectorCanvas ${VERSION} by ${AUTHOR}
+
+---$select:結合方法
+---OR=0
+---AND=1
+---XOR=2
+local operation = 0
+
+if _vectorcanvas == nil then
+    print("@error", "ベクターキャンバスが作成されていません。「キャンバス@VectorCanvas」を追加してください。")
+    return
+end
+
+local operations = { "OR", "AND", "XOR" }
+table.insert(_vectorcanvas.canvas, string.format("boolean: %s", operations[operation + 1]))
