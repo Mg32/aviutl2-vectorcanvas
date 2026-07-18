@@ -8,6 +8,28 @@ project:
 build:
   out_dir: build
 
+package:
+  id: VectorCanvas
+  name: ベクターキャンバス
+  information: ベクターキャンバス for AviUtl2 v{version}
+  version: 0.1.0
+  uninstall_sub_folder_file: true
+  out_dir: build
+  file_name: "{id}-v{version}.au2pkg.zip"
+  script_sub_dir: "{id}"
+  message:
+    text: |
+      # ベクターキャンバス
+
+      複雑なベクターグラフィックスを AviUtl ExEdit2 で扱うためのスクリプト群です。
+
+      https://github.com/Mg32/aviutl2-vectorcanvas
+  assets:
+    - src: LICENSE
+      dest: Script/{id}/LICENSE
+    - src: build/vectorcanvas.mod2
+      dest: Script/{id}/vectorcanvas.mod2
+
 install:
   out_dir: C:\ProgramData\aviutl2\Script\VectorCanvas\
 
