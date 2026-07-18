@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and release Windows package
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install aulua
+        run: cargo install --locked aulua
+
+      - name: Build scripts
+        run: aulua build
+
+      - name: Build module
+        run: cargo build --release
+
+      - name: Copy module
+        run: Copy-Item -Path target\release\vectorcanvas.dll -Destination build\vectorcanvas.mod2
+
+      - name: Pack au2pkg
+        run: aulua pack
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $artifacts = Get-ChildItem -Path build -Filter *.au2pkg.zip
+          if ($artifacts.Count -eq 0) {
+            throw "No build/*.au2pkg.zip artifacts were generated."
+          }
+
+          gh release create $env:GITHUB_REF_NAME $artifacts.FullName --title $env:GITHUB_REF_NAME --generate-notes
